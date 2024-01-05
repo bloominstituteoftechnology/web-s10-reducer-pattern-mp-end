@@ -63,7 +63,7 @@ label>span {
   min-width: 140px;
 }
 
-#todoForm, #todos {
+#quoteForm, #quotes {
   padding: 1.2rem;
   margin-top: 1.5rem;
   border: 1px solid #c7c7c7;

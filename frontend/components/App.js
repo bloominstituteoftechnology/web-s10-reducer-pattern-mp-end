@@ -1,39 +1,66 @@
 import React, { useReducer } from 'react'
-import Todos from './Todos'
-import TodoForm from './TodoForm'
+import Quotes from './Quotes'
+import QuoteForm from './QuoteForm'
 
-const TOGGLE_SHOW_COMPLETED_TODOS = 'TOGGLE_SHOW_COMPLETED_TODOS'
-const ADD_NEW_TODO = 'ADD_NEW_TODO'
-const TOGGLE_TODO = 'TOGGLE_TODO'
+const CREATE_NEW_QUOTE = 'CREATE_NEW_QUOTE'
+const DELETE_QUOTE = 'DELETE_QUOTE'
+const MARK_QUOTE_APOCRYPHAL = 'MARK_QUOTE_APOCRYPHAL'
+const MARK_QUOTE_HIGHLIGHTED = 'MARK_QUOTE_HIGHLIGHTED'
+const TOGGLE_HIDE_APOCRYPHAL = 'TOGGLE_HIDE_APOCRYPHAL'
 
 let id = 1
 const getNextId = () => id++
 const initialState = {
-  showCompletedTodos: true,
-  todos: [
-    { id: getNextId(), label: 'Laundry', complete: true },
-    { id: getNextId(), label: 'Groceries', complete: false },
-    { id: getNextId(), label: 'Dishes', complete: false },
+  hideApocryphalQuotes: false,
+  quotes: [
+    {
+      id: getNextId(),
+      quoteText: "Don't cry because it's over, smile because it happened.",
+      authorName: "Dr. Seuss",
+      apocryphal: false,
+      highlighted: false,
+    },
+    {
+      id: getNextId(),
+      quoteText: "So many books, so little time.",
+      authorName: "Frank Zappa",
+      apocryphal: false,
+      highlighted: false,
+    },
+    {
+      id: getNextId(),
+      quoteText: "Be yourself; everyone else is already taken.",
+      authorName: "Oscar Wilde",
+      apocryphal: true,
+      highlighted: false,
+    },
   ],
 }
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case ADD_NEW_TODO:
-      return { ...state, todos: [...state.todos, action.payload] }
-    case TOGGLE_TODO:
+    case CREATE_NEW_QUOTE:
+      return { ...state, quotes: [...state.quotes, action.payload] }
+    case DELETE_QUOTE:
+      return { ...state, quotes: state.quotes.filter(qt => qt.id != action.payload) }
+    case MARK_QUOTE_APOCRYPHAL:
       return {
         ...state,
-        todos: state.todos.map(td => {
-          if (td.id != action.payload) return td
-          return { ...td, complete: !td.complete }
+        quotes: state.quotes.map(qt => {
+          if (qt.id != action.payload) return qt
+          return { ...qt, apocryphal: true }
         })
       }
-    case TOGGLE_SHOW_COMPLETED_TODOS:
+    case MARK_QUOTE_HIGHLIGHTED:
       return {
         ...state,
-        showCompletedTodos: !state.showCompletedTodos
+        quotes: state.quotes.map(qt => {
+          if (qt.id == action.payload) return { ...qt, highlighted: true }
+          return { ...qt, highlighted: false }
+        })
       }
+    case TOGGLE_HIDE_APOCRYPHAL:
+      return { ...state, hideApocryphalQuotes: !state.hideApocryphalQuotes }
     default:
       return state
   }
@@ -42,28 +69,36 @@ const reducer = (state, action) => {
 export default function App() {
   const [state, dispatch] = useReducer(reducer, initialState)
 
-  const createNewTodo = (label, complete) => {
-    const newTodo = { id: getNextId(), label, complete }
-    dispatch({ type: ADD_NEW_TODO, payload: newTodo })
+  const createNewQuote = ({ authorName, quoteText }) => {
+    const newQuote = { id: getNextId(), authorName, quoteText }
+    dispatch({ type: CREATE_NEW_QUOTE, payload: newQuote })
   }
-  const toggleTodo = id => {
-    dispatch({ type: TOGGLE_TODO, payload: id })
+  const deleteTodo = id => {
+    dispatch({ type: DELETE_QUOTE, payload: id })
   }
-  const toggleShowCompletedTodos = () => {
-    dispatch({ type: TOGGLE_SHOW_COMPLETED_TODOS })
+  const markQuoteApocryphal = id => {
+    dispatch({ type: MARK_QUOTE_APOCRYPHAL, payload: id })
+  }
+  const markQuoteHighlighted = id => {
+    dispatch({ type: MARK_QUOTE_HIGHLIGHTED, payload: id })
+  }
+  const toggleHideApocryphal = () => {
+    dispatch({ type: TOGGLE_HIDE_APOCRYPHAL })
   }
 
   return (
     <div id="mp">
       <h2>Module Project</h2>
-      <Todos
-        todos={state.todos}
-        toggleTodo={toggleTodo}
-        showCompletedTodos={state.showCompletedTodos}
-        toggleShowCompletedTodos={toggleShowCompletedTodos}
+      <Quotes
+        quotes={state.quotes}
+        hideApocryphalQuotes={state.hideApocryphalQuotes}
+        markQuoteApocryphal={markQuoteApocryphal}
+        markQuoteHighlighted={markQuoteHighlighted}
+        toggleHideApocryphal={toggleHideApocryphal}
+        deleteTodo={deleteTodo}
       />
-      <TodoForm
-        createNewTodo={createNewTodo}
+      <QuoteForm
+        createNewQuote={createNewQuote}
       />
     </div>
   )
