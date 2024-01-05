@@ -1,40 +1,45 @@
 import React from 'react'
-import styled from 'styled-components'
-
-const StyledQuote = styled.li`
-  text-decoration: ${pr => pr.$complete ? 'line-through' : 'initial'};
-  cursor: pointer;
-`
 
 export default function Quotes({
   quotes,
   hideApocryphalQuotes,
   markQuoteApocryphal,
-  markQuoteHighlighted,
+  toggleQuoteHighlighted,
   toggleHideApocryphal,
-  deleteTodo,
+  deleteQuote,
 }) {
 
   return (
     <div id="quotes">
       <h3>Quotes</h3>
-      <ul>
+      <div>
         {
           quotes
             ?.filter(qt => {
               return !hideApocryphalQuotes || !qt.apocryphal
             })
             .map(qt => (
-              <StyledQuote key={qt.id}>
+              <div
+                key={qt.id}
+                className={`quote${qt.apocryphal ? " fake" : ''}${qt.highlighted ? " highlight" : ''}`}
+              >
                 <div>{qt.quoteText}</div>
                 <div>{qt.authorName}</div>
-              </StyledQuote>
+                <div>
+                  <button onClick={() => deleteQuote(qt.id)}>delete</button>
+                  <button onClick={() => toggleQuoteHighlighted(qt.id)}>highlight</button>
+                  <button disabled={qt.apocryphal} onClick={() => markQuoteApocryphal(qt.id)}>fake!</button>
+                </div>
+              </div>
             ))
         }
-      </ul>
-      <button onClick={toggleHideApocryphal}>
-        {hideApocryphalQuotes ? 'Show' : 'Hide'} apocryphal todos
-      </button>
+        {
+          !quotes?.length && "No quotes here! Go and write some."
+        }
+      </div>
+      {!!quotes?.length && <button onClick={toggleHideApocryphal}>
+        {hideApocryphalQuotes ? 'Show' : 'Hide'} fake quotes
+      </button>}
     </div>
   )
 }

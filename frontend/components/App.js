@@ -5,7 +5,7 @@ import QuoteForm from './QuoteForm'
 const CREATE_NEW_QUOTE = 'CREATE_NEW_QUOTE'
 const DELETE_QUOTE = 'DELETE_QUOTE'
 const MARK_QUOTE_APOCRYPHAL = 'MARK_QUOTE_APOCRYPHAL'
-const MARK_QUOTE_HIGHLIGHTED = 'MARK_QUOTE_HIGHLIGHTED'
+const TOGGLE_QUOTE_HIGHLIGHTED = 'TOGGLE_QUOTE_HIGHLIGHTED'
 const TOGGLE_HIDE_APOCRYPHAL = 'TOGGLE_HIDE_APOCRYPHAL'
 
 let id = 1
@@ -31,7 +31,7 @@ const initialState = {
       id: getNextId(),
       quoteText: "Be yourself; everyone else is already taken.",
       authorName: "Oscar Wilde",
-      apocryphal: true,
+      apocryphal: false,
       highlighted: false,
     },
   ],
@@ -51,11 +51,11 @@ const reducer = (state, action) => {
           return { ...qt, apocryphal: true }
         })
       }
-    case MARK_QUOTE_HIGHLIGHTED:
+    case TOGGLE_QUOTE_HIGHLIGHTED:
       return {
         ...state,
         quotes: state.quotes.map(qt => {
-          if (qt.id == action.payload) return { ...qt, highlighted: true }
+          if (qt.id == action.payload && !qt.highlighted) return { ...qt, highlighted: true }
           return { ...qt, highlighted: false }
         })
       }
@@ -73,14 +73,14 @@ export default function App() {
     const newQuote = { id: getNextId(), authorName, quoteText }
     dispatch({ type: CREATE_NEW_QUOTE, payload: newQuote })
   }
-  const deleteTodo = id => {
+  const deleteQuote = id => {
     dispatch({ type: DELETE_QUOTE, payload: id })
   }
   const markQuoteApocryphal = id => {
     dispatch({ type: MARK_QUOTE_APOCRYPHAL, payload: id })
   }
-  const markQuoteHighlighted = id => {
-    dispatch({ type: MARK_QUOTE_HIGHLIGHTED, payload: id })
+  const toggleQuoteHighlighted = id => {
+    dispatch({ type: TOGGLE_QUOTE_HIGHLIGHTED, payload: id })
   }
   const toggleHideApocryphal = () => {
     dispatch({ type: TOGGLE_HIDE_APOCRYPHAL })
@@ -93,9 +93,9 @@ export default function App() {
         quotes={state.quotes}
         hideApocryphalQuotes={state.hideApocryphalQuotes}
         markQuoteApocryphal={markQuoteApocryphal}
-        markQuoteHighlighted={markQuoteHighlighted}
+        toggleQuoteHighlighted={toggleQuoteHighlighted}
         toggleHideApocryphal={toggleHideApocryphal}
-        deleteTodo={deleteTodo}
+        deleteQuote={deleteQuote}
       />
       <QuoteForm
         createNewQuote={createNewQuote}

@@ -58,11 +58,10 @@ export default function TodoForm({ createNewQuote }) {
         />
       </label>
       <label><span>Create quote:</span>
-        <input
-          type='submit'
-          value='Do it!'
+        <button
+          role='submit'
           disabled={!state.authorName.trim() || !state.quoteText.trim()}
-        />
+        >Do it!</button>
       </label>
     </form>
   )
