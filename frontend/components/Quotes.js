@@ -3,7 +3,7 @@ import React from 'react'
 export default function Quotes({
   quotes,
   hideApocryphalQuotes,
-  markQuoteApocryphal,
+  toggleQuoteApocryphal,
   toggleQuoteHighlighted,
   toggleHideApocryphal,
   deleteQuote,
@@ -25,10 +25,10 @@ export default function Quotes({
               >
                 <div>{qt.quoteText}</div>
                 <div>{qt.authorName}</div>
-                <div>
+                <div className="quote-buttons">
                   <button onClick={() => deleteQuote(qt.id)}>delete</button>
                   <button onClick={() => toggleQuoteHighlighted(qt.id)}>highlight</button>
-                  <button disabled={qt.apocryphal} onClick={() => markQuoteApocryphal(qt.id)}>fake!</button>
+                  <button onClick={() => toggleQuoteApocryphal(qt.id)}>fake!</button>
                 </div>
               </div>
             ))
@@ -38,7 +38,7 @@ export default function Quotes({
         }
       </div>
       {!!quotes?.length && <button onClick={toggleHideApocryphal}>
-        {hideApocryphalQuotes ? 'Show' : 'Hide'} fake quotes
+        {hideApocryphalQuotes ? 'show' : 'hide'} fake quotes
       </button>}
     </div>
   )

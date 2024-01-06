@@ -43,7 +43,7 @@ export default function TodoForm({ createNewQuote }) {
         <input
           type='text'
           name='authorName'
-          placeholder='Type author name'
+          placeholder='type author name'
           onChange={onChange}
           value={state.authorName}
         />
@@ -52,7 +52,7 @@ export default function TodoForm({ createNewQuote }) {
         <textarea
           type='text'
           name='quoteText'
-          placeholder='Type quote'
+          placeholder='type quote'
           onChange={onChange}
           value={state.quoteText}
         />
@@ -61,7 +61,7 @@ export default function TodoForm({ createNewQuote }) {
         <button
           role='submit'
           disabled={!state.authorName.trim() || !state.quoteText.trim()}
-        >Do it!</button>
+        >do it!</button>
       </label>
     </form>
   )

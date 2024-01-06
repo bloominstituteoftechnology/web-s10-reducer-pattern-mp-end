@@ -22,10 +22,6 @@ h3 {
   color: #93005a;
 }
 
-h2 {
-  margin-bottom: 1rem;
-}
-
 h3 {
   margin-bottom: 0.85rem;
 }
@@ -35,8 +31,8 @@ h3 {
   overflow-y: auto;
   border-top: 1px solid grey;
   border-bottom: 1px solid grey;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
+  padding-top: 1rem;
+  padding-bottom: 1.5rem;
 }
 
 header,
@@ -63,12 +59,21 @@ label>span {
   min-width: 140px;
 }
 
-#quoteForm, #quotes {
+#quoteForm,
+#quotes {
   padding: 1.2rem;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   border: 1px solid #c7c7c7;
   border-radius: 8px;
   width: 100%;
+}
+
+textarea {
+  resize: vertical;
+}
+
+input, textarea {
+  border: 1px solid #c7c7c7;
 }
 
 .quote {
@@ -77,27 +82,31 @@ label>span {
   padding: 0.8rem;
   border-radius: 8px;
   color: gray;
-  width: 400px;
-  border: 3px solid white;
+  width: 320px;
+  border: 2px solid #f2f2f2a9;
+  background-color: #f8f8f838;
+  box-shadow: rgba(79, 79, 79, 0.074) 0px 8px 24px inset;
 }
 
 .quote.fake::after {
   position: absolute;
-  top: 25%;
-  left: 28%;
+  left: 0.8rem;
+  bottom: 0.5rem;
   content: 'FAKE QUOTE!';
   color: #ff4b00;
-  font-size: 2em;
-  opacity: 0.4;
-  z-index: -1000;
+  font-size: 1em;
+  opacity: 0.6;
 }
 
 .quote.highlight {
-  border: 3px solid gold;
+  border: 2px solid gold;
+  box-shadow: rgba(255, 244, 42, 0.122) 0px 8px 24px;
   color: black;
+  background-color: white;
 }
 
 .quote>div:nth-of-type(2) {
+  margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   font-size: 0.85em;
 }
@@ -128,7 +137,6 @@ button {
   color: #93005a;
   transition: all 0.25s ease-in-out;
   margin-right: -1px;
-  /* border-radius: 4px; */
 }
 
 button:hover {
@@ -138,15 +146,23 @@ button:hover {
   cursor: pointer;
 }
 
-button[disabled], button[disabled]:hover {
+button[disabled],
+button[disabled]:hover {
   cursor: not-allowed;
   background-color: white;
   color: gray;
 }
 
-.quote>div>button:nth-of-type(1) {
+.quote-buttons>button:nth-of-type(1) {
   border-radius: 4px 0 0 4px;
 }
-.quote>div>button:nth-of-type(3) {
+
+.quote-buttons>button:nth-of-type(3) {
   border-radius: 0 4px 4px 0;
+}
+
+.quote.highlight .quote-buttons>button:nth-of-type(2),
+.quote.fake .quote-buttons>button:nth-of-type(3) {
+  background-color: #93005a;
+  color: white;
 }

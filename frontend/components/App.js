@@ -4,7 +4,7 @@ import QuoteForm from './QuoteForm'
 
 const CREATE_NEW_QUOTE = 'CREATE_NEW_QUOTE'
 const DELETE_QUOTE = 'DELETE_QUOTE'
-const MARK_QUOTE_APOCRYPHAL = 'MARK_QUOTE_APOCRYPHAL'
+const TOGGLE_QUOTE_APOCRYPHAL = 'TOGGLE_QUOTE_APOCRYPHAL'
 const TOGGLE_QUOTE_HIGHLIGHTED = 'TOGGLE_QUOTE_HIGHLIGHTED'
 const TOGGLE_HIDE_APOCRYPHAL = 'TOGGLE_HIDE_APOCRYPHAL'
 
@@ -43,12 +43,12 @@ const reducer = (state, action) => {
       return { ...state, quotes: [...state.quotes, action.payload] }
     case DELETE_QUOTE:
       return { ...state, quotes: state.quotes.filter(qt => qt.id != action.payload) }
-    case MARK_QUOTE_APOCRYPHAL:
+    case TOGGLE_QUOTE_APOCRYPHAL:
       return {
         ...state,
         quotes: state.quotes.map(qt => {
           if (qt.id != action.payload) return qt
-          return { ...qt, apocryphal: true }
+          return { ...qt, apocryphal: !qt.apocryphal }
         })
       }
     case TOGGLE_QUOTE_HIGHLIGHTED:
@@ -76,8 +76,8 @@ export default function App() {
   const deleteQuote = id => {
     dispatch({ type: DELETE_QUOTE, payload: id })
   }
-  const markQuoteApocryphal = id => {
-    dispatch({ type: MARK_QUOTE_APOCRYPHAL, payload: id })
+  const toggleQuoteApocryphal = id => {
+    dispatch({ type: TOGGLE_QUOTE_APOCRYPHAL, payload: id })
   }
   const toggleQuoteHighlighted = id => {
     dispatch({ type: TOGGLE_QUOTE_HIGHLIGHTED, payload: id })
@@ -92,7 +92,7 @@ export default function App() {
       <Quotes
         quotes={state.quotes}
         hideApocryphalQuotes={state.hideApocryphalQuotes}
-        markQuoteApocryphal={markQuoteApocryphal}
+        toggleQuoteApocryphal={toggleQuoteApocryphal}
         toggleQuoteHighlighted={toggleQuoteHighlighted}
         toggleHideApocryphal={toggleHideApocryphal}
         deleteQuote={deleteQuote}
