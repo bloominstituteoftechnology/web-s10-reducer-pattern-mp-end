@@ -2,11 +2,12 @@ import React from 'react'
 
 export default function Quotes({
   quotes,
-  hideApocryphalQuotes,
-  toggleQuoteApocryphal,
-  toggleQuoteHighlighted,
-  toggleHideApocryphal,
+  highlightedQuote,
+  displayAllQuotes,
   deleteQuote,
+  editQuoteAuthenticity,
+  setHighlightedQuote,
+  toggleVisibility,
 }) {
 
   return (
@@ -16,29 +17,29 @@ export default function Quotes({
         {
           quotes
             ?.filter(qt => {
-              return !hideApocryphalQuotes || !qt.apocryphal
+              return displayAllQuotes || !qt.apocryphal
             })
             .map(qt => (
               <div
                 key={qt.id}
-                className={`quote${qt.apocryphal ? " fake" : ''}${qt.highlighted ? " highlight" : ''}`}
+                className={`quote${qt.apocryphal ? " fake" : ''}${highlightedQuote === qt.id ? " highlight" : ''}`}
               >
                 <div>{qt.quoteText}</div>
                 <div>{qt.authorName}</div>
                 <div className="quote-buttons">
-                  <button onClick={() => deleteQuote(qt.id)}>delete</button>
-                  <button onClick={() => toggleQuoteHighlighted(qt.id)}>highlight</button>
-                  <button onClick={() => toggleQuoteApocryphal(qt.id)}>fake!</button>
+                  <button onClick={() => deleteQuote(qt.id)}>DELETE</button>
+                  <button onClick={() => setHighlightedQuote(qt.id)}>HIGHLIGHT</button>
+                  <button onClick={() => editQuoteAuthenticity(qt.id)}>FAKE</button>
                 </div>
               </div>
             ))
         }
         {
-          !quotes?.length && "No quotes here! Go and write some."
+          !quotes?.length && "No quotes here! Go write some."
         }
       </div>
-      {!!quotes?.length && <button onClick={toggleHideApocryphal}>
-        {hideApocryphalQuotes ? 'show' : 'hide'} fake quotes
+      {!!quotes?.length && <button onClick={toggleVisibility}>
+        {displayAllQuotes ? 'HIDE' : 'SHOW'} FAKE QUOTES
       </button>}
     </div>
   )

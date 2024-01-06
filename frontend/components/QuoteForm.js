@@ -21,7 +21,7 @@ const reducer = (state, action) => {
   }
 }
 
-export default function TodoForm({ createNewQuote }) {
+export default function TodoForm({ createQuote }) {
   const [state, dispatch] = useReducer(reducer, initialState)
   const onChange = ({ target: { name, value } }) => {
     dispatch({ type: CHANGE_INPUT, payload: { name, value } })
@@ -32,7 +32,7 @@ export default function TodoForm({ createNewQuote }) {
   const onNewQuote = evt => {
     evt.preventDefault()
     const { authorName, quoteText } = state
-    createNewQuote({ authorName, quoteText })
+    createQuote({ authorName, quoteText })
     resetForm()
   }
 
@@ -61,7 +61,7 @@ export default function TodoForm({ createNewQuote }) {
         <button
           role='submit'
           disabled={!state.authorName.trim() || !state.quoteText.trim()}
-        >do it!</button>
+        >DO IT!</button>
       </label>
     </form>
   )

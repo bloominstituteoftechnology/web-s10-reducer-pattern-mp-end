@@ -74,6 +74,7 @@ textarea {
 
 input, textarea {
   border: 1px solid #c7c7c7;
+  width: 180px;
 }
 
 .quote {
@@ -91,11 +92,11 @@ input, textarea {
 .quote.fake::after {
   position: absolute;
   left: 0.8rem;
-  bottom: 0.5rem;
-  content: 'FAKE QUOTE!';
+  bottom: 0.7rem;
+  content: 'MARKED FAKE';
   color: #ff4b00;
-  font-size: 1em;
-  opacity: 0.6;
+  font-size: 1.1em;
+  opacity: 0.8;
 }
 
 .quote.highlight {
@@ -133,7 +134,7 @@ input, textarea {
 button {
   border: 1px solid #93005a;
   background-color: white;
-  font-size: 0.85em;
+  font-size: 0.75em;
   color: #93005a;
   transition: all 0.25s ease-in-out;
   margin-right: -1px;
