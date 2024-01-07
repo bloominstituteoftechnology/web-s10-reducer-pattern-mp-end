@@ -9,3 +9,7 @@
 
 1. `npm install`
 2. `npm run dev`
+
+## ✨ Prototype App
+
+[LINK](https://bloominstituteoftechnology.github.io/W_S10_M1_Project/)
