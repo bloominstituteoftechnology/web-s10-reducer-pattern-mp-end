@@ -28,6 +28,9 @@ const MP3_NAME = '[name].[ext]'
 const SOURCE_MAP = IS_DEV ? 'source-map' : false
 
 const config = {
+  // optimization: {
+  //   minimize: false,
+  // },
   entry: INDEX_JS_PATH,
   mode: ENV,
   output: {
